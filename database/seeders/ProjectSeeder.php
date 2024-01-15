@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Project;
+use App\Models\Technology;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Type;
@@ -16,6 +17,9 @@ class ProjectSeeder extends Seeder
     {
         Project::query()->delete();
 
+        $types = Type::all();
+        $technologies = Technology::all();
+
         $projectsNames = [
             'Progetto 1',
             'Progetto 2',
@@ -24,7 +28,7 @@ class ProjectSeeder extends Seeder
         ];
 
         foreach ( $projectsNames as $name ) {
-            Project::create([
+            $project = Project::create([
                 'type_id' => collect([1,2,3])->random(),
                 'name' => $name,
                 'image_path' => fake()->imageUrl,
