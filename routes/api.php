@@ -21,3 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('projects', [ProjectController::class, 'index']);
 Route::get('/projects/{project:slug}', [ProjectController::class, 'show']);
+
+// Laravel Hello World!
+// http://127.0.0.1:8000/projects/laravel-hello-world

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('image_path');
             $table->text('description');
             $table->timestamps();
+            $table->string('slug')->unique()->nullable();
         });
     }
 
@@ -27,5 +28,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('projects');
+        Schema::table('projects', function (Blueprint $table) {
+            $table->dropColumn('slug');
+        });
     }
 };

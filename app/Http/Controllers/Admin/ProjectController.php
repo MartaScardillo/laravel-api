@@ -35,7 +35,7 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, string $slug)
     {
         $request->validate([
             'name' => 'required|string|max:255',
@@ -45,13 +45,15 @@ class ProjectController extends Controller
             'technologies' => 'array',
         ]);
 
-        $project = Project::create($request->all());
+        $project = Project::where('slug', $slug)->firstOrFail();
+        $project->update($request->all());
 
         if ($request->has('technologies')) {
             $technologies = $request->input('technologies');
             $project->technologies()->sync($technologies);
         }
-
+        
+        // $project = Project::create($request->all());
         return redirect()->route('admin.projects.index')
             ->with('success', 'Progetto creato');
     }
