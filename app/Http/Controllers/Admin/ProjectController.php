@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 use App\Models\Type;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -45,8 +46,9 @@ class ProjectController extends Controller
             'technologies' => 'array',
         ]);
 
-        $project = Project::where('slug', $slug)->firstOrFail();
-        $project->update($request->all());
+
+        $project = $request->all();
+        $project['slug'] = Str::slug($project['title'], '-');
 
         if ($request->has('technologies')) {
             $technologies = $request->input('technologies');
